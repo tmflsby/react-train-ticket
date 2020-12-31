@@ -1,10 +1,7 @@
-import { useState, useCallback, useRef, useEffect, memo } from 'react'
+import { useState, useRef, useEffect, memo } from 'react'
 import * as actions from './actions';
 import reducer from "./reducer";
 import './index.css';
-
-let idSeq = Date.now();
-const LS_KEY = '_$-todos_';
 
 const bindActionCreators = (actionCreators, dispatch) => {
   const ret = {};
@@ -30,11 +27,7 @@ const Control = memo((props) => {
 
     if (newText.length === 0) return;
 
-    addTodo({
-      id: ++idSeq,
-      text: newText,
-      complete: false
-    });
+    addTodo(newText);
 
     inputRef.current.value = '';
   };
@@ -85,22 +78,40 @@ const Todos = memo((props) => {
   );
 });
 
+const LS_KEY = '_$-todos_';
+
+let store = {
+  todos: [],
+  incrementCount: 0
+};
+
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [incrementCount, setIncrementCount] = useState(0);
 
-  const dispatch = useCallback((action) => {
-   const state = { todos, incrementCount };
-   const setters = {
-     todos: setTodos,
-     incrementCount: setIncrementCount
-   };
-   const newState = reducer(state, action);
-
-   for (let key in newState) {
-     setters[key](newState[key]);
-   }
+  useEffect(() => {
+    Object.assign(store, {
+      todos,
+      incrementCount
+    });
   }, [todos, incrementCount]);
+
+  const dispatch = (action) => {
+    const setters = {
+      todos: setTodos,
+      incrementCount: setIncrementCount
+    };
+    const newState = reducer(store, action);
+
+    if ('function' === typeof action) {
+      action(dispatch, () => store);
+      return;
+    }
+
+    for (let key in newState) {
+      setters[key](newState[key]);
+    }
+  };
 
   useEffect(() => {
     const todos = JSON.parse(localStorage.getItem(LS_KEY)) || [];
