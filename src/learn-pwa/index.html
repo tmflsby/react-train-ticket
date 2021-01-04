@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learn PWA</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+<h1>HELLO PWA</h1>
+<script>
+    navigator.serviceWorker.register('./ServiceWorker.js', {
+      scope: '/'
+    }).then(registration => {
+        console.log(registration)
+    }, error => {
+        console.error(error);
+    });
+</script>
+<script src="./Fetch.js"></script>
+</body>
+</html>
