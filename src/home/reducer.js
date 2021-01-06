@@ -1,4 +1,4 @@
-import * as ACTION_TYPE from './actions';
+import * as actionTypes from './actionTypes';
 
 const defaultState = {
   from: '北京',
@@ -15,7 +15,7 @@ const reducer = {
   from(state = defaultState.from, action) {
     const { type, payload } = action;
     switch (type) {
-      case ACTION_TYPE.ACTION_SET_FROM:
+      case actionTypes.ACTION_SET_FROM:
         return payload;
       default:
     }
@@ -24,7 +24,7 @@ const reducer = {
   to(state = defaultState.to, action) {
     const { type, payload } = action;
     switch (type) {
-      case ACTION_TYPE.ACTION_SET_TO:
+      case actionTypes.ACTION_SET_TO:
         return payload;
       default:
     }
@@ -33,7 +33,7 @@ const reducer = {
   isCitySelectorVisible(state = defaultState.isCitySelectorVisible, action) {
     const { type, payload } = action;
     switch (type) {
-      case ACTION_TYPE.ACTION_SET_IS_CITY_SELECTOR_VISIBLE:
+      case actionTypes.ACTION_SET_IS_CITY_SELECTOR_VISIBLE:
         return payload;
       default:
     }
@@ -42,7 +42,7 @@ const reducer = {
   currentSelectingLeftCity(state = defaultState.currentSelectingLeftCity, action) {
     const { type, payload } = action;
     switch (type) {
-      case ACTION_TYPE.ACTION_SET_CURRENT_SELECTING_LEFT_CITY:
+      case actionTypes.ACTION_SET_CURRENT_SELECTING_LEFT_CITY:
         return payload;
       default:
     }
@@ -51,7 +51,7 @@ const reducer = {
   cityData(state = defaultState.cityData, action) {
     const { type, payload } = action;
     switch (type) {
-      case ACTION_TYPE.ACTION_SET_CITY_DATA:
+      case actionTypes.ACTION_SET_CITY_DATA:
         return payload;
       default:
     }
@@ -60,7 +60,7 @@ const reducer = {
   isLoadingCityData(state = defaultState.isLoadingCityData, action) {
     const { type, payload } = action;
     switch (type) {
-      case ACTION_TYPE.ACTION_SET_IS_LOADING_CITY_DATA:
+      case actionTypes.ACTION_SET_IS_LOADING_CITY_DATA:
         return payload;
       default:
     }
@@ -69,7 +69,7 @@ const reducer = {
   isDateSelectorVisible(state = defaultState.isDateSelectorVisible, action) {
     const { type, payload } = action;
     switch (type) {
-      case ACTION_TYPE.ACTION_SET_IS_DATE_SELECTOR_VISIBLE:
+      case actionTypes.ACTION_SET_IS_DATE_SELECTOR_VISIBLE:
         return payload;
       default:
     }
@@ -78,7 +78,7 @@ const reducer = {
   highSpeed(state = defaultState.highSpeed, action) {
     const { type, payload } = action;
     switch (type) {
-      case ACTION_TYPE.ACTION_SET_HIGH_SPEED:
+      case actionTypes.ACTION_SET_HIGH_SPEED:
         return payload;
       default:
     }
