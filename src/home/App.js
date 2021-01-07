@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import './App.css';
 
 import Header from '../common/Header';
-import Journey from './Journey';
-import DepartDate from './DepartDate';
-import HighSpeed from './HighSpeed';
-import Submit from './Submit';
+import Journey from './components/Journey';
+import DepartDate from './components/DepartDate';
+import HighSpeed from './components/HighSpeed';
+import Submit from './components/Submit';
 
-import * as actionCreators from './actionCreators';
+import * as actionCreators from './store/actionCreators';
 
 const App = (props) => {
   const { from, to, dispatch } = props;
