@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './App.css';
 
 import Header from '../common/Header';
+import CitySelector from "../common/CitySelector";
 import Journey from './components/Journey';
 import DepartDate from './components/DepartDate';
 import HighSpeed from './components/HighSpeed';
@@ -12,19 +13,14 @@ import Submit from './components/Submit';
 import * as actionCreators from './store/actionCreators';
 
 const App = (props) => {
-  const { from, to, dispatch } = props;
+  const {
+    from, to, isCitySelectorVisible, cityData,
+    isLoadingCityData, dispatch
+  } = props;
 
   const onBack = useCallback(() => {
     window.history.back();
   }, []);
-
-  // const doExchangeFromTo = useCallback(() => {
-  //   dispatch(actionCreators.exchangeFromTo());
-  // }, []);
-  //
-  // const doShowCitySelector = useCallback((m) => {
-  //   dispatch(actionCreators.showCitySelector(m));
-  // }, []);
 
   const cbs = useMemo(() => {
     return bindActionCreators({
@@ -32,6 +28,12 @@ const App = (props) => {
       showCitySelector: actionCreators.showCitySelector
     }, dispatch);
   }, [dispatch]);
+
+  const citySelectorCbs = useMemo(() => {
+    return bindActionCreators({
+      onBack: actionCreators.hideCitySelector
+    }, dispatch)
+  },[])
 
   return (
     <div>
@@ -43,12 +45,16 @@ const App = (props) => {
           from={from}
           to={to}
           {...cbs}
-          // exchangeFromTo={doExchangeFromTo}
-          // showCitySelector={doShowCitySelector}
         />
         <DepartDate/>
         <HighSpeed/>
         <Submit/>
+        <CitySelector
+          show={isCitySelectorVisible}
+          cityData={cityData}
+          isLoading={isLoadingCityData}
+          {...citySelectorCbs}
+        />
       </form>
     </div>
   );
