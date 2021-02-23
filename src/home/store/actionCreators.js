@@ -72,6 +72,11 @@ export const exchangeFromTo = () => (dispatch, getState) => {
   dispatch(setTo(from));
 };
 
+export const setDepartDate = (departDate) => ({
+  type: actionTypes.ACTION_SET_DEPART_DATE,
+  payload: departDate
+});
+
 export const fetchCityData = () => (dispatch, getState) => {
   const { isLoadingCityData } = getState();
 

@@ -8,6 +8,7 @@ const defaultState = {
   cityData: null,
   isLoadingCityData: false,
   isDateSelectorVisible: false,
+  departDate: Date.now(),
   highSpeed: false
 }
 
@@ -84,6 +85,15 @@ const reducer = {
     }
     return state;
   },
+  departDate(state = Date.now(), action) {
+    const { type, payload } = action;
+    switch (type) {
+      case actionTypes.ACTION_SET_DEPART_DATE:
+        return payload;
+      default:
+    }
+    return state;
+  }
 };
 
 export default reducer;

@@ -10,6 +10,7 @@ const store = createStore(combineReducers(reducer), {
   cityData: null,
   isLoadingCityData: false,
   isDateSelectorVisible: false,
+  departDate: Date.now(),
   highSpeed: false
 }, applyMiddleware(thunk));
 

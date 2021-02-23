@@ -15,7 +15,7 @@ import * as actionCreators from './store/actionCreators';
 const App = (props) => {
   const {
     from, to, isCitySelectorVisible, cityData,
-    isLoadingCityData, dispatch
+    isLoadingCityData, dispatch, departDate
   } = props;
 
   const onBack = useCallback(() => {
@@ -34,8 +34,14 @@ const App = (props) => {
       onBack: actionCreators.hideCitySelector,
       fetchCityData: actionCreators.fetchCityData,
       onSelect: actionCreators.setSelectedCity
-    }, dispatch)
-  },[dispatch])
+    }, dispatch);
+  },[dispatch]);
+
+  const departDateCbs = useMemo(() => {
+    return bindActionCreators({
+      onClick: actionCreators.showDateSelector
+    }, dispatch);
+  }, [dispatch]);
 
   return (
     <div>
@@ -48,7 +54,10 @@ const App = (props) => {
           to={to}
           {...cbs}
         />
-        <DepartDate/>
+        <DepartDate
+          time={departDate}
+          {...departDateCbs}
+        />
         <HighSpeed/>
         <Submit/>
         <CitySelector
