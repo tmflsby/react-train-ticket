@@ -1,12 +1,76 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './index.css';
 
-const CitySelector = (props) => {
+const CityItem = memo((props) => {
+  const { name, onSelect } = props;
+
+  return (
+    <li className="city-li" onClick={() => onSelect(name)}>{name}</li>
+  );
+});
+
+CityItem.propTypes = {
+  name: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired
+};
+
+const CitySection = memo((props) => {
+  const { title, cities = [], onSelect } = props;
+
+  return(
+    <ul className="city-ul">
+      <li className="city-li" key="title">{title}</li>
+      {
+        cities.map(city =>
+          <CityItem
+            key={city.name}
+            name={city.name}
+            onSelect={onSelect}
+          />
+        )
+      }
+    </ul>
+  );
+});
+
+CitySection.propTypes = {
+  title: PropTypes.string.isRequired,
+  cities: PropTypes.array,
+  onSelect: PropTypes.func.isRequired
+};
+
+const CityList = memo((props) => {
+  const { sections, onSelect } = props;
+
+  return(
+    <div className="city-list">
+      <div className="city-cate">
+        {
+          sections.map(section =>
+            <CitySection
+              key={section.title}
+              title={section.title}
+              cities={section.citys}
+              onSelect={onSelect}
+            />
+          )
+        }
+      </div>
+    </div>
+  );
+});
+
+CityList.propTypes = {
+  sections: PropTypes.array.isRequired,
+  onSelect: PropTypes.func.isRequired
+};
+
+const CitySelector = memo((props) => {
   const {
     show, cityData, isLoading,
-    onBack, fetchCityData
+    onBack, fetchCityData, onSelect
   } = props;
 
   const [searchKey, setSearchKey] = useState('');
@@ -19,6 +83,21 @@ const CitySelector = (props) => {
     }
     fetchCityData()
   }, [show, cityData, isLoading, fetchCityData])
+
+  const outputCitySections = () => {
+    if (isLoading) {
+      return <div>Loading</div>;
+    }
+    if (cityData) {
+      return (
+        <CityList
+          sections={cityData.cityList}
+          onSelect={onSelect}
+        />
+      );
+    }
+    return <div>Error</div>;
+  };
 
   return (
     <div className={classnames('city-selector', {
@@ -53,16 +132,18 @@ const CitySelector = (props) => {
           &#xf063;
         </i>
       </div>
+      { outputCitySections() }
     </div>
   );
-};
+});
 
 CitySelector.propTypes = {
   show: PropTypes.bool.isRequired,
   cityData: PropTypes.object,
   isLoading: PropTypes.bool.isRequired,
   onBack: PropTypes.func.isRequired,
-  fetchCityData: PropTypes.func.isRequired
+  fetchCityData: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired
 };
 
 export default CitySelector;

@@ -46,11 +46,14 @@ export const hideCitySelector = () => ({
 
 export const setSelectedCity = (city) => (dispatch, getState) => {
   const { currentSelectingLeftCity } = getState();
+
   if (currentSelectingLeftCity) {
     dispatch(setFrom(city));
   } else {
     dispatch(setTo(city));
   }
+
+  dispatch(hideCitySelector());
 };
 
 export const showDateSelector = () => ({
@@ -71,23 +74,30 @@ export const exchangeFromTo = () => (dispatch, getState) => {
 
 export const fetchCityData = () => (dispatch, getState) => {
   const { isLoadingCityData } = getState();
+
   if (isLoadingCityData) {
     return;
   }
+
   const cache = JSON.parse(localStorage.getItem('city_data_cache') || '{}');
+
   if (Date.now() < cache.expires) {
     dispatch(setCityData(cache.data));
     return;
   }
+
   dispatch(setISLoadingCityData(true));
+
   fetch('/rest/cities?_' + Date.now())
     .then(res => res.json())
     .then(cityData => {
       dispatch(setCityData(cityData));
+
       localStorage.setItem('city_data_cache', JSON.stringify({
         expires: Date.now() * 60 * 1000,
         data: cityData
       }));
+
       dispatch(setISLoadingCityData(false));
     })
     .catch(() => {
