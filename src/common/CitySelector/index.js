@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, memo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './index.css';
@@ -21,7 +21,13 @@ const CitySection = memo((props) => {
 
   return(
     <ul className="city-ul">
-      <li className="city-li" key="title">{title}</li>
+      <li
+        className="city-li"
+        key={title}
+        data-cate={title}
+      >
+        {title}
+      </li>
       {
         cities.map(city =>
           <CityItem
@@ -41,8 +47,27 @@ CitySection.propTypes = {
   onSelect: PropTypes.func.isRequired
 };
 
+const AlphaIndex = memo((props) => {
+  const { alpha, onClick } = props;
+
+  return(
+    <i className="city-index-item" onClick={() => onClick(alpha)}>
+      {alpha}
+    </i>
+  );
+});
+
+AlphaIndex.propTypes = {
+  alpha: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
+}
+
+const alphabet = Array.from(new Array(26), (ele, index) =>
+  String.fromCharCode(65 + index)
+);
+
 const CityList = memo((props) => {
-  const { sections, onSelect } = props;
+  const { sections, onSelect, toAlpha } = props;
 
   return(
     <div className="city-list">
@@ -58,13 +83,25 @@ const CityList = memo((props) => {
           )
         }
       </div>
+      <div className="city-index">
+        {
+          alphabet.map(alpha =>
+            <AlphaIndex
+              key={alpha}
+              alpha={alpha}
+              onClick={toAlpha}
+            />
+          )
+        }
+      </div>
     </div>
   );
 });
 
 CityList.propTypes = {
   sections: PropTypes.array.isRequired,
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  toAlpha: PropTypes.func.isRequired
 };
 
 const CitySelector = memo((props) => {
@@ -75,14 +112,18 @@ const CitySelector = memo((props) => {
 
   const [searchKey, setSearchKey] = useState('');
 
-  const key = useMemo(() => searchKey.trim(), [searchKey])
+  const key = useMemo(() => searchKey.trim(), [searchKey]);
 
   useEffect(() => {
     if (!show || cityData || isLoading) {
       return;
     }
     fetchCityData()
-  }, [show, cityData, isLoading, fetchCityData])
+  }, [show, cityData, isLoading, fetchCityData]);
+
+  const toAlpha = useCallback((alpha) => {
+    document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
+  }, []);
 
   const outputCitySections = () => {
     if (isLoading) {
@@ -93,6 +134,7 @@ const CitySelector = memo((props) => {
         <CityList
           sections={cityData.cityList}
           onSelect={onSelect}
+          toAlpha={toAlpha}
         />
       );
     }
