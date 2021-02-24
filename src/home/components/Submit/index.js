@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { memo } from 'react';
 import './index.css';
 
-const Submit = (props) => {
+const Submit = memo(() => {
   return (
-    <div></div>
+    <div className="submit">
+      <button
+        type="submit"
+        className="submit-button"
+      >
+        搜索
+      </button>
+    </div>
   );
-};
+});
 
 export default Submit;
