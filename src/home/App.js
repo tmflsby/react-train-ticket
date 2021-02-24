@@ -1,21 +1,22 @@
 import React, { useCallback, useMemo } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import './App.css';
-
+import { h0 } from '../common/utils/fp';
 import Header from '../common/Header';
-import CitySelector from "../common/CitySelector";
+import CitySelector from '../common/CitySelector';
+import DateSelector from '../common/DateSelector';
 import Journey from './components/Journey';
 import DepartDate from './components/DepartDate';
 import HighSpeed from './components/HighSpeed';
 import Submit from './components/Submit';
-
 import * as actionCreators from './store/actionCreators';
+import './App.css';
+import {hideDateSelector, setDepartDate} from "./store/actionCreators";
 
 const App = (props) => {
   const {
-    from, to, isCitySelectorVisible, cityData,
-    isLoadingCityData, dispatch, departDate
+    from, to, isCitySelectorVisible, isDateSelectorVisible,
+    cityData, isLoadingCityData, dispatch, departDate
   } = props;
 
   const onBack = useCallback(() => {
@@ -43,6 +44,23 @@ const App = (props) => {
     }, dispatch);
   }, [dispatch]);
 
+  const dateSelectorCbs = useMemo(() => {
+    return bindActionCreators({
+      onBack: actionCreators.hideDateSelector
+    }, dispatch);
+  }, [dispatch]);
+
+  const onSelectDate = useCallback((day) => {
+    if (!day) {
+      return;
+    }
+    if (day < h0()) {
+      return;
+    }
+    dispatch(setDepartDate(day));
+    dispatch(hideDateSelector());
+  }, [dispatch])
+
   return (
     <div>
       <div className="header-wrapper">
@@ -65,6 +83,11 @@ const App = (props) => {
           cityData={cityData}
           isLoading={isLoadingCityData}
           {...citySelectorCbs}
+        />
+        <DateSelector
+          show={isDateSelectorVisible}
+          onSelect={onSelectDate}
+          {...dateSelectorCbs}
         />
       </form>
     </div>
