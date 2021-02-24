@@ -22,6 +22,7 @@ export const setCityData = (cityData) => ({
 
 export const toggleHighSpeed = () => (dispatch, getState) => {
   const { highSpeed } = getState();
+
   dispatch({
     type: actionTypes.ACTION_SET_HIGH_SPEED,
     payload: !highSpeed
@@ -33,6 +34,7 @@ export const showCitySelector = (currentSelectingLeftCity) => (dispatch) => {
     type: actionTypes.ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
     payload: true
   });
+
   dispatch({
     type: actionTypes.ACTION_SET_CURRENT_SELECTING_LEFT_CITY,
     payload: currentSelectingLeftCity
@@ -68,6 +70,7 @@ export const hideDateSelector = () => ({
 
 export const exchangeFromTo = () => (dispatch, getState) => {
   const { from, to } = getState();
+
   dispatch(setFrom(to));
   dispatch(setTo(from));
 };
@@ -107,5 +110,5 @@ export const fetchCityData = () => (dispatch, getState) => {
     })
     .catch(() => {
       dispatch(setISLoadingCityData(false));
-    })
+    });
 };

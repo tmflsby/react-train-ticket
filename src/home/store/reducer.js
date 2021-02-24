@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 
-const defaultState = {
+export const defaultState = {
   from: '北京',
   to: '上海',
   isCitySelectorVisible: false,

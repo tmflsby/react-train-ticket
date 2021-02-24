@@ -11,7 +11,6 @@ import HighSpeed from './components/HighSpeed';
 import Submit from './components/Submit';
 import * as actionCreators from './store/actionCreators';
 import './App.css';
-import {hideDateSelector, setDepartDate} from "./store/actionCreators";
 
 const App = (props) => {
   const {
@@ -57,8 +56,8 @@ const App = (props) => {
     if (day < h0()) {
       return;
     }
-    dispatch(setDepartDate(day));
-    dispatch(hideDateSelector());
+    dispatch(actionCreators.setDepartDate(day));
+    dispatch(actionCreators.hideDateSelector());
   }, [dispatch]);
 
   const highSpeedCbs = useMemo(() => {
