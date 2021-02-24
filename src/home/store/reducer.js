@@ -10,7 +10,7 @@ export const defaultState = {
   isDateSelectorVisible: false,
   departDate: Date.now(),
   highSpeed: false
-}
+};
 
 const reducer = {
   from(state = defaultState.from, action) {

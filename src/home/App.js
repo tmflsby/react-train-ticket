@@ -102,12 +102,8 @@ const App = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return state;
-};
+const mapStateToProps = (state) => state;
 
-const mapDispatchToProps = (dispatch) => {
-  return { dispatch };
-};
+const mapDispatchToProps = (dispatch) => ({ dispatch });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
