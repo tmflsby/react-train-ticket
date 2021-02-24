@@ -16,14 +16,14 @@ import {hideDateSelector, setDepartDate} from "./store/actionCreators";
 const App = (props) => {
   const {
     from, to, isCitySelectorVisible, isDateSelectorVisible,
-    cityData, isLoadingCityData, dispatch, departDate
+    cityData, isLoadingCityData, dispatch, departDate, highSpeed
   } = props;
 
   const onBack = useCallback(() => {
     window.history.back();
   }, []);
 
-  const cbs = useMemo(() => {
+  const journeyCbs = useMemo(() => {
     return bindActionCreators({
       exchangeFromTo: actionCreators.exchangeFromTo,
       showCitySelector: actionCreators.showCitySelector
@@ -59,7 +59,13 @@ const App = (props) => {
     }
     dispatch(setDepartDate(day));
     dispatch(hideDateSelector());
-  }, [dispatch])
+  }, [dispatch]);
+
+  const highSpeedCbs = useMemo(() => {
+    return bindActionCreators({
+      toggle: actionCreators.toggleHighSpeed
+    }, dispatch);
+  }, [dispatch]);
 
   return (
     <div>
@@ -70,13 +76,16 @@ const App = (props) => {
         <Journey
           from={from}
           to={to}
-          {...cbs}
+          {...journeyCbs}
         />
         <DepartDate
           time={departDate}
           {...departDateCbs}
         />
-        <HighSpeed/>
+        <HighSpeed
+          highSpeed={highSpeed}
+          {...highSpeedCbs}
+        />
         <Submit/>
         <CitySelector
           show={isCitySelectorVisible}
