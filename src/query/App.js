@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import URI from 'urijs';
 import dayjs from 'dayjs';
 import { h0 } from '../common/utils/fp';
-import Header from '../common/Header';
-import Nav from '../common/Nav';
+import useNav from '../common/hooks/useNav';
+import Header from '../common/components/Header';
+import Nav from '../common/components/Nav';
 import List from './components/List';
 import Bottom from './components/Bottom';
 import * as actionCreators from './store/actionCreators';
@@ -26,6 +27,8 @@ const App = (props) => {
     dispatch(actionCreators.setTo(to));
     dispatch(actionCreators.setDepartDate(h0(dayjs(date).valueOf())));
     dispatch(actionCreators.setHighSpeed(highSpeed === 'true'));
+
+    dispatch(actionCreators.setSearchParsed(true));
   }, [dispatch]);
 
   useEffect(() => {
@@ -83,6 +86,14 @@ const App = (props) => {
     window.history.back();
   }, []);
 
+  const {
+    prev, next, isPrevDisabled, isNextDisabled
+  } = useNav(departDate, dispatch, actionCreators.prevDate, actionCreators.nextDate)
+
+  if (!searchParsed) {
+    return null;
+  }
+
   return(
     <div>
       <div className="header-wrapper">
@@ -91,7 +102,13 @@ const App = (props) => {
           onBack={onBack}
         />
       </div>
-      <Nav/>
+      <Nav
+        date={departDate}
+        prev={prev}
+        next={next}
+        isPrevDisabled={isPrevDisabled}
+        isNextDisabled={isNextDisabled}
+      />
       <List/>
       <Bottom/>
     </div>

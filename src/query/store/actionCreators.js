@@ -132,13 +132,13 @@ export const setSearchParsed = (searchParsed) => ({
   payload: searchParsed
 });
 
-export const nextDate = (dispatch, getState) => {
+export const nextDate = () => (dispatch, getState) => {
   const { departDate } = getState();
 
   dispatch(setDepartDate(h0(departDate) + 86400 * 1000));
 };
 
-export const prevDate = (dispatch, getState) => {
+export const prevDate = () => (dispatch, getState) => {
   const { departDate } = getState();
 
   dispatch(setDepartDate(h0(departDate) - 86400 * 1000));

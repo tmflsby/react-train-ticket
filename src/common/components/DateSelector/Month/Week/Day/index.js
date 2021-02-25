@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { h0 } from '../../../../utils/fp';
+import { h0 } from '../../../../../utils/fp';
 
 const Day = (props) => {
   const { day, onSelect } = props;
