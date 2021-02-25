@@ -22,7 +22,7 @@ export const setHighSpeed = (highSpeed) => ({
   payload: highSpeed
 });
 
-export const toggleHighSpeed = (dispatch, getState) => {
+export const toggleHighSpeed = () => (dispatch, getState) => {
   const { highSpeed } = getState();
 
   dispatch(setHighSpeed(!highSpeed));
@@ -33,7 +33,7 @@ export const setTrainList = (trainList) => ({
   payload: trainList
 });
 
-export const toggleOrderType = (dispatch, getState) => {
+export const toggleOrderType = () => (dispatch, getState) => {
   const { orderType } = getState();
 
   if (orderType === ORDER_DEPART) {
@@ -49,7 +49,7 @@ export const toggleOrderType = (dispatch, getState) => {
   }
 };
 
-export const toggleOnlyTickets = (dispatch, getState) => {
+export const toggleOnlyTickets = () => (dispatch, getState) => {
   const { onlyTickets } = getState();
 
   dispatch({
@@ -118,7 +118,7 @@ export const setArriveTimeEnd = (arriveTimeEnd) => ({
   payload: arriveTimeEnd
 });
 
-export const toggleIsFiltersVisible = (dispatch, getState) => {
+export const toggleIsFiltersVisible = () => (dispatch, getState) => {
   const { isFiltersVisible } = getState();
 
   dispatch({
