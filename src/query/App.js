@@ -15,7 +15,7 @@ const App = (props) => {
   const {
     from, to, departDate, highSpeed, searchParsed, dispatch, orderType, onlyTickets,
     checkedTicketTypes, checkedTrainTypes, checkedDepartStations, checkedArriveStations,
-    departTimeStart, departTimeEnd, arriveTimeStart, arriveTimeEnd
+    departTimeStart, departTimeEnd, arriveTimeStart, arriveTimeEnd, trainList
   } = props;
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const App = (props) => {
         isPrevDisabled={isPrevDisabled}
         isNextDisabled={isNextDisabled}
       />
-      <List/>
+      <List list={trainList}/>
       <Bottom/>
     </div>
   );
