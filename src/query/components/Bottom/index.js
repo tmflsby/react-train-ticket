@@ -2,12 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { ORDER_DEPART } from '../../store/constant';
+import BottomModal from './BottomModal';
 import './index.css';
 
 const Bottom = (props) => {
   const {
     toggleOrderType, toggleHighSpeed, toggleOnlyTickets, toggleIsFiltersVisible,
-    highSpeed, orderType, onlyTickets, isFiltersVisible
+    highSpeed, orderType, onlyTickets, isFiltersVisible, ticketTypes, trainTypes,
+    departStations, arriveStations, checkedTicketTypes, checkedTrainTypes,
+    checkedDepartStations, checkedArriveStations, departTimeStart,
+    departTimeEnd, arriveTimeStart, arriveTimeEnd, setCheckedTicketTypes,
+    setCheckedTrainTypes, setCheckedDepartStations, setCheckedArriveStations,
+    setDepartTimeStart, setDepartTimeEnd, setArriveTimeStart, setArriveTimeEnd
   } = props;
 
   return (
@@ -45,6 +51,33 @@ const Bottom = (props) => {
           综合筛选
         </span>
       </div>
+      {
+        isFiltersVisible && (
+          <BottomModal
+            ticketTypes={ticketTypes}
+            trainTypes={trainTypes}
+            departStations={departStations}
+            arriveStations={arriveStations}
+            checkedTicketTypes={checkedTicketTypes}
+            checkedTrainTypes={checkedTrainTypes}
+            checkedDepartStations={checkedDepartStations}
+            checkedArriveStations={checkedArriveStations}
+            departTimeStart={departTimeStart}
+            departTimeEnd={departTimeEnd}
+            arriveTimeStart={arriveTimeStart}
+            arriveTimeEnd={arriveTimeEnd}
+            setCheckedTicketTypes={setCheckedTicketTypes}
+            setCheckedTrainTypes={setCheckedTrainTypes}
+            setCheckedDepartStations={setCheckedDepartStations}
+            setCheckedArriveStations={setCheckedArriveStations}
+            setDepartTimeStart={setDepartTimeStart}
+            setDepartTimeEnd={setDepartTimeEnd}
+            setArriveTimeStart={setArriveTimeStart}
+            setArriveTimeEnd={setArriveTimeEnd}
+            toggleIsFiltersVisible={toggleIsFiltersVisible}
+          />
+        )
+      }
     </div>
   );
 };
@@ -58,6 +91,26 @@ Bottom.propTypes = {
   orderType: PropTypes.number.isRequired,
   onlyTickets: PropTypes.bool.isRequired,
   isFiltersVisible: PropTypes.bool.isRequired,
+  ticketTypes: PropTypes.array.isRequired,
+  trainTypes: PropTypes.array.isRequired,
+  departStations: PropTypes.array.isRequired,
+  arriveStations: PropTypes.array.isRequired,
+  checkedTicketTypes: PropTypes.object.isRequired,
+  checkedTrainTypes: PropTypes.object.isRequired,
+  checkedDepartStations: PropTypes.object.isRequired,
+  checkedArriveStations: PropTypes.object.isRequired,
+  departTimeStart: PropTypes.number.isRequired,
+  departTimeEnd: PropTypes.number.isRequired,
+  arriveTimeStart: PropTypes.number.isRequired,
+  arriveTimeEnd: PropTypes.number.isRequired,
+  setCheckedTicketTypes: PropTypes.func.isRequired,
+  setCheckedTrainTypes: PropTypes.func.isRequired,
+  setCheckedDepartStations: PropTypes.func.isRequired,
+  setCheckedArriveStations: PropTypes.func.isRequired,
+  setDepartTimeStart: PropTypes.func.isRequired,
+  setDepartTimeEnd: PropTypes.func.isRequired,
+  setArriveTimeStart: PropTypes.func.isRequired,
+  setArriveTimeEnd: PropTypes.func.isRequired
 };
 
 export default Bottom;

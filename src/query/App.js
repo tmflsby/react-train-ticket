@@ -15,8 +15,9 @@ import './App.css';
 const App = (props) => {
   const {
     from, to, departDate, highSpeed, searchParsed, dispatch, orderType, onlyTickets,
+    trainList, isFiltersVisible, ticketTypes, trainTypes, departStations, arriveStations,
     checkedTicketTypes, checkedTrainTypes, checkedDepartStations, checkedArriveStations,
-    departTimeStart, departTimeEnd, arriveTimeStart, arriveTimeEnd, trainList, isFiltersVisible
+    departTimeStart, departTimeEnd, arriveTimeStart, arriveTimeEnd
   } = props;
 
   useEffect(() => {
@@ -96,7 +97,15 @@ const App = (props) => {
       toggleOrderType: actionCreators.toggleOrderType,
       toggleHighSpeed: actionCreators.toggleHighSpeed,
       toggleOnlyTickets: actionCreators.toggleOnlyTickets,
-      toggleIsFiltersVisible: actionCreators.toggleIsFiltersVisible
+      toggleIsFiltersVisible: actionCreators.toggleIsFiltersVisible,
+      setCheckedTicketTypes: actionCreators.setCheckedTicketTypes,
+      setCheckedTrainTypes: actionCreators.setCheckedTrainTypes,
+      setCheckedDepartStations: actionCreators.setCheckedDepartStations,
+      setCheckedArriveStations: actionCreators.setCheckedArriveStations,
+      setDepartTimeStart: actionCreators.setDepartTimeStart,
+      setDepartTimeEnd: actionCreators.setDepartTimeEnd,
+      setArriveTimeStart: actionCreators.setArriveTimeStart,
+      setArriveTimeEnd: actionCreators.setArriveTimeEnd
     }, dispatch);
   }, [dispatch]);
 
@@ -125,6 +134,18 @@ const App = (props) => {
         orderType={orderType}
         onlyTickets={onlyTickets}
         isFiltersVisible={isFiltersVisible}
+        ticketTypes={ticketTypes}
+        trainTypes={trainTypes}
+        departStations={departStations}
+        arriveStations={arriveStations}
+        checkedTicketTypes={checkedTicketTypes}
+        checkedTrainTypes={checkedTrainTypes}
+        checkedDepartStations={checkedDepartStations}
+        checkedArriveStations={checkedArriveStations}
+        departTimeStart={departTimeStart}
+        departTimeEnd={departTimeEnd}
+        arriveTimeStart={arriveTimeStart}
+        arriveTimeEnd={arriveTimeEnd}
         {...bottomCbs}
       />
     </div>
