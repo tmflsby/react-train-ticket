@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { ORDER_DEPART } from '../../store/constant';
@@ -15,6 +15,24 @@ const Bottom = (props) => {
     setCheckedTrainTypes, setCheckedDepartStations, setCheckedArriveStations,
     setDepartTimeStart, setDepartTimeEnd, setArriveTimeStart, setArriveTimeEnd
   } = props;
+
+  const noChecked = useMemo(() => {
+    return (
+      Object.keys(checkedTicketTypes).length === 0 &&
+        Object.keys(checkedTrainTypes).length === 0 &&
+        Object.keys(checkedDepartStations).length === 0 &&
+        Object.keys(checkedArriveStations).length === 0 &&
+        departTimeStart === 0 &&
+        departTimeEnd === 24 &&
+        arriveTimeStart === 0 &&
+        arriveTimeEnd === 24
+    );
+  }, [
+    checkedTicketTypes, checkedTrainTypes,
+    checkedDepartStations, checkedArriveStations,
+    departTimeStart, departTimeEnd,
+    arriveTimeStart, arriveTimeEnd
+  ]);
 
   return (
     <div className="bottom">
@@ -43,11 +61,11 @@ const Bottom = (props) => {
         </span>
         <span
           className={classnames('item', {
-            'item-on': isFiltersVisible
+            'item-on': isFiltersVisible || !noChecked
           })}
           onClick={toggleIsFiltersVisible}
         >
-          <i className="icon">{'\uf0f7'}</i>
+          <i className="icon">{noChecked ? '\uf0f7' : '\uf446'}</i>
           综合筛选
         </span>
       </div>
