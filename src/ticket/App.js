@@ -1,4 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import URI from 'urijs';
 import dayjs from 'dayjs';
@@ -66,6 +67,12 @@ const App = (props) => {
     prev, next, isPrevDisabled, isNextDisabled
   } = useNav(departDate, dispatch, actionCreators.prevDate, actionCreators.nextDate);
 
+  const detailCbs = useMemo(() => {
+    return bindActionCreators({
+      toggleIsScheduleVisible: actionCreators.toggleIsScheduleVisible
+    }, dispatch);
+  }, [dispatch]);
+
   if (!searchParsed) {
     return null;
   }
@@ -85,6 +92,19 @@ const App = (props) => {
           next={next}
           isPrevDisabled={isPrevDisabled}
           isNextDisabled={isNextDisabled}
+        />
+      </div>
+      <div className="detail-wrapper">
+        <Detail
+          departDate={departDate}
+          arriveDate={arriveDate}
+          departTimeStr={departTimeStr}
+          arriveTimeStr={arriveTimeStr}
+          trainNumber={trainNumber}
+          departStation={departStation}
+          arriveStation={arriveStation}
+          durationStr={durationStr}
+          {...detailCbs}
         />
       </div>
     </div>
