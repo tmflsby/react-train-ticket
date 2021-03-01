@@ -9,6 +9,7 @@ import Nav from '../common/components/Nav';
 import useNav from '../common/hooks/useNav';
 import Detail from '../common/components/Detail';
 import Candidate from './components/Candidate';
+import { TrainContext } from './store/context';
 import * as actionCreators from './store/actionCreators'
 import './App.css';
 
@@ -108,6 +109,16 @@ const App = (props) => {
           {...detailCbs}
         />
       </div>
+      <TrainContext.Provider
+        value={{
+          trainNumber,
+          departStation,
+          arriveStation,
+          departDate
+        }}
+      >
+        <Candidate tickets={tickets}/>
+      </TrainContext.Provider>
       {
         isScheduleVisible && (
           <div
