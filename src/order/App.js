@@ -1,9 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import URI from 'urijs';
 import dayjs from 'dayjs';
 import Header from '../common/components/Header';
 import Detail from '../common/components/Detail';
+import Ticket from './components/Ticket';
+import Passengers from './components/Passengers';
 import * as actionCreators from './store/actionCreators';
 import './App.css';
 
@@ -49,6 +52,17 @@ const App = (props) => {
     window.history.back();
   }, []);
 
+  const passengersCbs = useMemo(() => {
+    return bindActionCreators({
+      createAdult: actionCreators.createAdult,
+      createChild: actionCreators.createChild
+    }, dispatch)
+  }, [dispatch])
+
+  if (!searchParsed) {
+    return null;
+  }
+
   return(
     <div className="app">
       <div className="header-wrapper">
@@ -76,6 +90,14 @@ const App = (props) => {
           />
         </Detail>
       </div>
+      <Ticket
+        price={price}
+        type={seatType}
+      />
+      <Passengers
+        passengers={passengers}
+        {...passengersCbs}
+      />
     </div>
   );
 };

@@ -86,3 +86,67 @@ export const fetchInitial = (url) => (dispatch) => {
       dispatch(setPrice(price));
     });
 };
+
+let passengerIdSeed = 0;
+export const createAdult = () => (dispatch, getState) => {
+  const { passengers } = getState();
+
+  for (let passenger of passengers) {
+    const keys = Object.keys(passenger);
+
+    for (let key of keys) {
+      if (!passenger[key]) {
+        return;
+      }
+    }
+  }
+
+  dispatch(setPassengers([
+    ...passengers,
+    {
+      id: ++passengerIdSeed,
+      name: '',
+      ticketType: 'adult',
+      licenceNo: '',
+      seat: 'Z'
+    }
+  ]));
+};
+
+export const createChild = () => (dispatch, getState) => {
+  const { passengers } = getState();
+
+  let adultFound = null;
+
+  for (let passenger of passengers) {
+    const keys = Object.keys(passenger);
+
+    for (let key of keys) {
+      if (!passenger[key]) {
+        return;
+      }
+    }
+
+    if (passenger.ticketType === 'adult') {
+      adultFound = passenger.id;
+    }
+  }
+
+  if (!adultFound) {
+    alert('请至少正确添加一个同行成人');
+    return;
+  }
+
+  dispatch(setPassengers([
+    ...passengers,
+    {
+      id: ++passengerIdSeed,
+      name: '',
+      gender: 'none',
+      birthday: '',
+      followAdult: '',
+      ticketType: 'child',
+      seat: 'Z'
+    }
+  ]));
+};
