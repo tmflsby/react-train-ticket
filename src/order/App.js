@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
+import URI from 'urijs';
+import dayjs from 'dayjs';
+import Header from '../common/components/Header';
+import Detail from '../common/components/Detail';
+import * as actionCreators from './store/actionCreators';
 import './App.css';
 
 const App = (props) => {
@@ -10,9 +15,67 @@ const App = (props) => {
     searchParsed, dispatch
   } = props;
 
+  useEffect(() => {
+    const queries = URI.parseQuery(window.location.search);
+    const { trainNumber, dStation, aStation, type, date } = queries;
+
+    dispatch(actionCreators.setDepartStation(dStation));
+    dispatch(actionCreators.setArriveStation(aStation));
+    dispatch(actionCreators.setTrainNumber(trainNumber));
+    dispatch(actionCreators.setSeatType(type));
+    dispatch(actionCreators.setDepartDate(dayjs(date).valueOf()));
+    dispatch(actionCreators.setSearchParsed(true));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!searchParsed) {
+      return;
+    }
+
+    const url = new URI('/rest/order')
+      .setSearch('dStation', departStation)
+      .setSearch('aStation', arriveStation)
+      .setSearch('type', seatType)
+      .setSearch('date', dayjs(departDate).format('YYYY-MM-DD'))
+      .toString();
+
+    dispatch(actionCreators.fetchInitial(url));
+  }, [
+    searchParsed, departStation, arriveStation,
+    seatType, departDate, dispatch
+  ]);
+
+  const onBack = useCallback(() => {
+    window.history.back();
+  }, []);
+
   return(
     <div className="app">
-
+      <div className="header-wrapper">
+        <Header
+          title="订单填写"
+          onBack={onBack}
+        />
+      </div>
+      <div className="detail-wrapper">
+        <Detail
+          departDate={departDate}
+          arriveDate={arriveDate}
+          departTimeStr={departTimeStr}
+          arriveTimeStr={arriveTimeStr}
+          trainNumber={trainNumber}
+          departStation={departStation}
+          arriveStation={arriveStation}
+          durationStr={durationStr}
+        >
+          <span
+            className="train-icon"
+            style={{
+              display: "block"
+            }}
+          />
+        </Detail>
+      </div>
     </div>
   );
 };

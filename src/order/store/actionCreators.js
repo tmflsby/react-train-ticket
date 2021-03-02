@@ -69,3 +69,20 @@ export const setSearchParsed = (searchParsed) => ({
   type: actionTypes.ACTION_SET_SEARCH_PARSED,
   payload: searchParsed
 });
+
+export const fetchInitial = (url) => (dispatch) => {
+  fetch(url)
+    .then(response => response.json())
+    .then(result => {
+      const {
+        departTimeStr, arriveTimeStr,
+        arriveDate, durationStr, price
+      } = result;
+
+      dispatch(setDepartTimeStr(departTimeStr));
+      dispatch(setArriveTimeStr(arriveTimeStr));
+      dispatch(setArriveDate(arriveDate));
+      dispatch(setDurationStr(durationStr));
+      dispatch(setPrice(price));
+    });
+};
