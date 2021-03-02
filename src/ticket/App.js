@@ -13,7 +13,7 @@ import { TrainContext } from './store/context';
 import * as actionCreators from './store/actionCreators'
 import './App.css';
 
-const Schedule = lazy(() => import('./components/Schedule'))
+const Schedule = lazy(() => import('./components/Schedule'));
 
 const App = (props) => {
   const {
