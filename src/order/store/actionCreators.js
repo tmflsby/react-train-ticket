@@ -144,9 +144,33 @@ export const createChild = () => (dispatch, getState) => {
       name: '',
       gender: 'none',
       birthday: '',
-      followAdult: '',
+      followAdult: adultFound,
       ticketType: 'child',
       seat: 'Z'
     }
   ]));
 };
+
+export const removePassenger = (id) => (dispatch, getState) => {
+  const { passengers } = getState();
+
+  const newPassengers = passengers.filter(passenger =>passenger.id !== id && passenger.followAdult !== id);
+
+  dispatch(setPassengers(newPassengers));
+}
+
+export const updatePassenger = (id, data) => (dispatch, getState) => {
+  const { passengers } = getState();
+
+  for (let i = 0; i < passengers.length; ++i) {
+    if (passengers[i].id === id) {
+      const newPassengers = [...passengers];
+
+      newPassengers[i] = Object.assign({}, passengers[i], data);
+
+      dispatch(setPassengers(newPassengers));
+
+      break;
+    }
+  }
+}

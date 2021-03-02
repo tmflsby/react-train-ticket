@@ -55,7 +55,9 @@ const App = (props) => {
   const passengersCbs = useMemo(() => {
     return bindActionCreators({
       createAdult: actionCreators.createAdult,
-      createChild: actionCreators.createChild
+      createChild: actionCreators.createChild,
+      removePassenger: actionCreators.removePassenger,
+      updatePassenger: actionCreators.updatePassenger
     }, dispatch)
   }, [dispatch])
 

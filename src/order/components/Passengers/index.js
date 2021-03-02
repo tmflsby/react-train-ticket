@@ -4,7 +4,10 @@ import Passenger from './Passenger';
 import './index.css';
 
 const Passengers = memo((props) => {
-  const { passengers, createAdult, createChild } = props;
+  const {
+    passengers, createAdult, createChild, removePassenger,
+    updatePassenger
+  } = props;
 
   return(
     <div className="passengers">
@@ -13,6 +16,8 @@ const Passengers = memo((props) => {
           passengers.map(passenger =>
             <Passenger
               key={passenger.id}
+              onRemove={removePassenger}
+              onUpdate={updatePassenger}
               {...passenger}
             />
           )
@@ -39,7 +44,9 @@ const Passengers = memo((props) => {
 Passengers.propTypes = {
   passengers: PropTypes.array.isRequired,
   createAdult: PropTypes.func.isRequired,
-  createChild: PropTypes.func.isRequired
+  createChild: PropTypes.func.isRequired,
+  removePassenger: PropTypes.func.isRequired,
+  updatePassenger: PropTypes.func.isRequired
 };
 
 export default Passengers;
