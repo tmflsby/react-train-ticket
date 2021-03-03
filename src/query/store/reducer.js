@@ -56,11 +56,12 @@ const reducer = {
   },
   highSpeed(state = defaultState.highSpeed, action) {
     const { type, payload } = action;
+    let checkedTrainTypes;
     switch (type) {
       case actionTypes.ACTION_SET_HIGH_SPEED:
         return payload;
       case actionTypes.ACTION_SET_CHECKED_TRAIN_TYPES:
-        const checkedTrainTypes = payload;
+        checkedTrainTypes = payload;
         return Boolean(checkedTrainTypes[1] && checkedTrainTypes[5]);
       default:
     }
@@ -122,12 +123,14 @@ const reducer = {
   },
   checkedTrainTypes(state = defaultState.checkedTrainTypes, action) {
     const { type, payload } = action;
+    let highSpeed;
+    let newCheckedTrainTypes;
     switch(type) {
       case actionTypes.ACTION_SET_CHECKED_TRAIN_TYPES:
         return payload;
       case actionTypes.ACTION_SET_HIGH_SPEED:
-        const highSpeed = payload;
-        const newCheckedTrainTypes = {...state};
+        highSpeed = payload;
+        newCheckedTrainTypes = {...state};
 
         if (highSpeed) {
           newCheckedTrainTypes[1] = true;

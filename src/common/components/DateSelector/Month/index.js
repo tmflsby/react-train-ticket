@@ -42,24 +42,24 @@ const Month = (props) => {
         </tr>
       </thead>
       <tbody>
-      <tr className="data-table-weeks">
-        <th>周一</th>
-        <th>周二</th>
-        <th>周三</th>
-        <th>周四</th>
-        <th>周五</th>
-        <th className="weekend">周六</th>
-        <th className="weekend">周日</th>
-      </tr>
-      {
-        weeks.map((week, index) =>
-          <Week
-            key={index}
-            days={week}
-            onSelect={onSelect}
-          />
-        )
-      }
+        <tr className="data-table-weeks">
+          <th>周一</th>
+          <th>周二</th>
+          <th>周三</th>
+          <th>周四</th>
+          <th>周五</th>
+          <th className="weekend">周六</th>
+          <th className="weekend">周日</th>
+        </tr>
+        {
+          weeks.map((week, index) =>
+            <Week
+              key={index}
+              days={week}
+              onSelect={onSelect}
+            />
+          )
+        }
       </tbody>
     </table>
   );
