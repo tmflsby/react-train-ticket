@@ -7,6 +7,7 @@ import Header from '../common/components/Header';
 import Detail from '../common/components/Detail';
 import Ticket from './components/Ticket';
 import Passengers from './components/Passengers';
+import Choose from './components/Choose';
 import Menu from './components/Menu';
 import * as actionCreators from './store/actionCreators';
 import './App.css';
@@ -65,6 +66,12 @@ const App = (props) => {
     }, dispatch);
   }, [dispatch]);
 
+  const chooseCbs = useMemo(() => {
+    return bindActionCreators({
+      updatePassenger: actionCreators.updatePassenger
+    }, dispatch);
+  }, [dispatch])
+
   const menuCbs = useMemo(() => {
     return bindActionCreators({
       hideMenu: actionCreators.hideMenu
@@ -110,6 +117,14 @@ const App = (props) => {
         passengers={passengers}
         {...passengersCbs}
       />
+      {
+        passengers.length > 0 && (
+          <Choose
+            passengers={passengers}
+            {...chooseCbs}
+          />
+        )
+      }
       <Menu
         show={isMenuVisible}
         {...menu}
