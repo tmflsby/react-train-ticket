@@ -8,6 +8,7 @@ import Detail from '../common/components/Detail';
 import Ticket from './components/Ticket';
 import Passengers from './components/Passengers';
 import Choose from './components/Choose';
+import Account from './components/Account';
 import Menu from './components/Menu';
 import * as actionCreators from './store/actionCreators';
 import './App.css';
@@ -125,6 +126,10 @@ const App = (props) => {
           />
         )
       }
+      <Account
+        price={price}
+        length={passengers.length}
+      />
       <Menu
         show={isMenuVisible}
         {...menu}
