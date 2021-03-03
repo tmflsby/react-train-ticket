@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 const Passenger = memo((props) => {
   const {
-    id, name, followAdult, ticketType,
+    id, name, followAdultName, ticketType,
     licenceNo, gender, birthday, onRemove,
-    onUpdate
+    onUpdate, showGenderMenu, showFollowAdultMenu,
+    showTicketTypeMenu
   } = props;
 
   const isAdult = ticketType === 'adult';
@@ -28,7 +29,10 @@ const Passenger = memo((props) => {
             value={name}
             onChange={(e) => onUpdate(id, {name: e.target.value})}
           />
-          <label className="ticket-type">
+          <label
+            className="ticket-type"
+            onClick={() => showTicketTypeMenu(id)}
+          >
             {isAdult ? '成人票' : '儿童票'}
           </label>
         </li>
@@ -57,6 +61,7 @@ const Passenger = memo((props) => {
                 value={
                   gender === 'male' ? '男' : gender === 'female' ? '女' : ''
                 }
+                onClick={() => showGenderMenu(id)}
                 readOnly
               />
             </li>
@@ -84,7 +89,8 @@ const Passenger = memo((props) => {
                 type="text"
                 className="input followAdult"
                 placeholder="请选择"
-                value={followAdult}
+                value={followAdultName}
+                onClick={() => showFollowAdultMenu(id)}
                 readOnly
               />
             </li>
@@ -98,7 +104,6 @@ const Passenger = memo((props) => {
 Passenger.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  followAdult: PropTypes.number,
   followAdultName: PropTypes.string,
   ticketType: PropTypes.string.isRequired,
   licenceNo: PropTypes.string,
@@ -106,9 +111,9 @@ Passenger.propTypes = {
   birthday: PropTypes.string,
   onRemove: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  // showGenderMenu: PropTypes.func.isRequired,
-  // showFollowAdultMenu: PropTypes.func.isRequired,
-  // showTicketTypeMenu: PropTypes.func.isRequired,
+  showGenderMenu: PropTypes.func.isRequired,
+  showFollowAdultMenu: PropTypes.func.isRequired,
+  showTicketTypeMenu: PropTypes.func.isRequired,
 };
 
 export default Passenger;

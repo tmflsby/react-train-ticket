@@ -7,6 +7,7 @@ import Header from '../common/components/Header';
 import Detail from '../common/components/Detail';
 import Ticket from './components/Ticket';
 import Passengers from './components/Passengers';
+import Menu from './components/Menu';
 import * as actionCreators from './store/actionCreators';
 import './App.css';
 
@@ -57,9 +58,18 @@ const App = (props) => {
       createAdult: actionCreators.createAdult,
       createChild: actionCreators.createChild,
       removePassenger: actionCreators.removePassenger,
-      updatePassenger: actionCreators.updatePassenger
-    }, dispatch)
-  }, [dispatch])
+      updatePassenger: actionCreators.updatePassenger,
+      showGenderMenu: actionCreators.showGenderMenu,
+      showFollowAdultMenu: actionCreators.showFollowAdultMenu,
+      showTicketTypeMenu: actionCreators.showTicketTypeMenu
+    }, dispatch);
+  }, [dispatch]);
+
+  const menuCbs = useMemo(() => {
+    return bindActionCreators({
+      hideMenu: actionCreators.hideMenu
+    }, dispatch);
+  }, [dispatch]);
 
   if (!searchParsed) {
     return null;
@@ -99,6 +109,11 @@ const App = (props) => {
       <Passengers
         passengers={passengers}
         {...passengersCbs}
+      />
+      <Menu
+        show={isMenuVisible}
+        {...menu}
+        {...menuCbs}
       />
     </div>
   );
